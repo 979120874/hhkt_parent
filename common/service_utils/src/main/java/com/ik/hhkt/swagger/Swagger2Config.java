@@ -1,4 +1,4 @@
-package com.ik.hhkt.config;
+package com.ik.hhkt.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
