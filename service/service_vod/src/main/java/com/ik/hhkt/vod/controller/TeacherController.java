@@ -15,7 +15,6 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -29,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/vod/teacher")
 @Api(tags = "讲师管理接口")
+@CrossOrigin
 public class TeacherController {
 
     @Resource
@@ -59,12 +59,12 @@ public class TeacherController {
         if (!b) {
             return Result.fail();
         }
-        return Result.ok();
+        return Result.ok().code(20000);
     }
 
-    @ApiOperation(value = "获取分页列表接口")
-    @PostMapping("{page}/{limit}")
-    public Result index(@ApiParam(name = "page",value = "当前页码",required = true) @PathVariable Long page,
+    @ApiOperation(value = "条件查询分页")
+    @PostMapping("findQueryPage/{page}/{limit}")
+    public Result findPage(@ApiParam(name = "page",value = "当前页码",required = true) @PathVariable Long page,
                         @ApiParam(name = "limit",value = "每页记录数",required = true) @PathVariable Long limit,
                         @ApiParam(name = "teacherQueryVo",value = "查询对象",required = false) @RequestBody(required = false) TeacherQueryVo teacherQueryVo) {
         Page<Teacher> teacherPage = new Page<>(page, limit);
@@ -74,7 +74,7 @@ public class TeacherController {
         String joinDateEnd = teacherQueryVo.getJoinDateEnd();
         QueryWrapper queryWrapper = new QueryWrapper();
         if (StringUtils.checkValNotNull(name)) {
-            queryWrapper.eq("name", name);
+            queryWrapper.like("name", name);
         }
         if (StringUtils.checkValNotNull(level)) {
             queryWrapper.eq("level", level);
@@ -86,11 +86,11 @@ public class TeacherController {
             queryWrapper.le("join_date", joinDateEnd);
         }
         IPage<Teacher> pageModel = teacherService.page(teacherPage, queryWrapper);
-        return Result.ok(pageModel);
+        return Result.ok(pageModel).code(20000);
     }
 
     @ApiOperation(value = "添加讲师接口")
-    @PostMapping("add")
+    @PostMapping("addTeacher")
     public Result addTeacher(@ApiParam(name = "teacher",value = "要添加的老师",required = true) @RequestBody Teacher teacher){
         boolean save = teacherService.save(teacher);
         return Result.ok(save);
@@ -112,20 +112,19 @@ public class TeacherController {
     @ApiOperation(value = "通过id获取教师信息")
     @GetMapping("get/{id}")
     public Result get(@ApiParam(name = "id",value = "修改ID",required = true) @PathVariable Long id) {
-        int i=10/0;
         Teacher teacher = teacherService.getById(id);
         return Result.ok(teacher);
     }
 
     @ApiOperation(value = "修改教师信息")
-    @PutMapping("update")
+    @PostMapping("update")
     public Result updateById(@ApiParam(name = "teacher",value = "修改内容",required = true) @RequestBody Teacher teacher) {
         teacherService.updateById(teacher);
         return Result.ok(null);
     }
 
     @ApiOperation("批量删除讲师接口")
-    @DeleteMapping("batchRemoveById")
+    @PostMapping("batchRemoveById")
     public Result batchRemoveById(@ApiParam(name = "idList",value = "所需删除的id",required = true) @RequestBody List<Long> idList){
         boolean b = teacherService.removeByIds(idList);
         if (!b){
