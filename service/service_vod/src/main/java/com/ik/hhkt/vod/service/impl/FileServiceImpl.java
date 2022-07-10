@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * TODO
+ * cos保存头像
  *
  * @className: FileServiceImpl
  * @author: weishihuan
@@ -59,9 +59,6 @@ public class FileServiceImpl implements FileService {
 
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream, objectMetadata);
             PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-            System.out.println("bucketName="+bucketName);
-            System.out.println("endpoint="+endpoint);
-            System.out.println("key="+key);
             //https://ggkt-atguigu-1310644373.cos.ap-beijing.myqcloud.com/01.jpg
             String url = "https://"+bucketName+"."+"cos"+"."+endpoint+".myqcloud.com"+"/"+key;
             return url;

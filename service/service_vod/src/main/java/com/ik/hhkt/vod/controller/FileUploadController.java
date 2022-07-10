@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 
 /**
- * TODO
+ * cos保存头像
  *
  * @className: FileUploadController
  * @author: weishihuan

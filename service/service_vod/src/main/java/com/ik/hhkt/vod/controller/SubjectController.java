@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("admin/vod/subject")
-@Api(tags = "课程管理")
+@Api(tags = "课程分类管理")
 @CrossOrigin
 public class SubjectController {
 
@@ -40,13 +40,13 @@ public class SubjectController {
         return Result.ok(subjects);
     }
 
-    @ApiOperation(value="导出")
+    @ApiOperation(value="使用EasyExcel导出")
     @GetMapping(value = "/exportData")
     public void exportData(HttpServletResponse response) {
         subjectService.exportData(response);
     }
 
-    @ApiOperation(value="导入")
+    @ApiOperation(value="使用EasyExcel导入")
     @PostMapping(value = "/importData")
     public Result importData(MultipartFile file) {
         subjectService.importData(file);
