@@ -3,6 +3,9 @@ package com.ik.hhkt.vod.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ik.hhkt.model.vod.Chapter;
+import com.ik.hhkt.vo.vod.ChapterVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,5 @@ import com.ik.hhkt.model.vod.Chapter;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    List<ChapterVo> getNestedTreeList(Long courseId);
 }

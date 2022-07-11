@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ik.hhkt.vod.mapper.ChapterMapper">
 
+    <resultMap id="ChapterVoMap" type="com.ik.hhkt.vo.vod.ChapterVo">
+        <id property="id" column="cid"></id>
+        <result property="title" column="ctitle"></result>
+        <result property="sort" column="csort"></result>
+        <collection property="children" ofType="com.ik.hhkt.vo.vod.VideoVo">
+            <result property="id" column="vid"></result>
+            <result property="title" column="vtitle"></result>
+            <result property="isFree" column="is_free"></result>
+            <result property="sort" column="vsort"></result>
+            <result property="videoSourceId" column="video_source_id"></result>
+        </collection>
+    </resultMap>
+    <select id="getNestedTreeList" parameterType="long" resultMap="ChapterVoMap">
+        select c.id cid, c.title ctitle, c.sort csort,v.id vid,v.title vtitle,v.is_free,v.sort vsort,v.video_source_id
+        from chapter c left join video v on c.course_id=v.course_id and c.id=v.chapter_id
+        where c.course_id = #{courseId} order by c.sort;
+    </select>
 </mapper>

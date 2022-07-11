@@ -2,7 +2,10 @@ package com.ik.hhkt.vod.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ik.hhkt.model.vod.Chapter;
+import com.ik.hhkt.vo.vod.ChapterVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ChapterMapper extends BaseMapper<Chapter> {
 
+    List<ChapterVo> getNestedTreeList(Long courseId);
 }

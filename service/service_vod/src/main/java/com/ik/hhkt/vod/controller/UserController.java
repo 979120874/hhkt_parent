@@ -1,6 +1,7 @@
 package com.ik.hhkt.vod.controller;
 
 import com.ik.hhkt.result.Result;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Hashtable;
 @RestController
 @RequestMapping("/admin/vod/user")
 @CrossOrigin
+@Api(tags = "用户登录管理接口")
 public class UserController {
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
