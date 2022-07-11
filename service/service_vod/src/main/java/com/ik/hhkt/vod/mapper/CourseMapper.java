@@ -3,6 +3,7 @@ package com.ik.hhkt.vod.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ik.hhkt.model.vod.Course;
 import com.ik.hhkt.vo.vod.CourseFormVo;
+import com.ik.hhkt.vo.vod.CoursePublishVo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -18,4 +19,5 @@ public interface CourseMapper extends BaseMapper<Course> {
 
     CourseFormVo getCourseInfo(Long id);
 
+    CoursePublishVo getCoursePublishVo(Long id);
 }

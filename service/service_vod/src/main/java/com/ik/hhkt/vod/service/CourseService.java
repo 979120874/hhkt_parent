@@ -3,6 +3,7 @@ package com.ik.hhkt.vod.service;
 import com.ik.hhkt.model.vod.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ik.hhkt.vo.vod.CourseFormVo;
+import com.ik.hhkt.vo.vod.CoursePublishVo;
 import com.ik.hhkt.vo.vod.CourseQueryVo;
 import com.ik.hhkt.vo.vod.CourseVo;
 
@@ -30,4 +31,12 @@ public interface CourseService extends IService<Course> {
 
     //修改课程信息
     Long updateCourseInfo(CourseFormVo courseFormVo);
+
+    //根据id获取课程发布信息
+    CoursePublishVo getCoursePublishVo(Long id);
+
+    //根据id发布课程
+    Boolean publishCourseById(Long id);
+
+    void removeCourseById(Long id);
 }

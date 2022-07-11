@@ -31,8 +31,8 @@ public class ChapterController {
     @Resource
     private ChapterService chapterService;
 
-    //获取章节小结列表
-    @ApiOperation("嵌套章节数据列表")
+    //1 大纲列表（章节和小节列表）
+    @ApiOperation("大纲列表")
     @GetMapping("getNestedTreeList/{courseId}")
     public Result getNestedTreeList(@ApiParam(value = "课程ID", required = true)
                                         @PathVariable("courseId") Long courseId){
@@ -44,16 +44,13 @@ public class ChapterController {
     @ApiOperation("添加章节")
     @PostMapping("/add")
     public Result save(@RequestBody Chapter chapter){
-        boolean save = chapterService.save(chapter);
-        if (!save){
-            return Result.fail(save);
-        }
-        return Result.fail(save);
+        chapterService.save(chapter);
+        return Result.ok();
     }
 
     //3 修改-根据id查询
     @ApiOperation("修改-根据id查询")
-    @PostMapping("/update/{id}")
+    @GetMapping("/get/{id}")
     public Result get(@PathVariable Long id){ ;
         Chapter chapter = chapterService.getById(id);
         return Result.ok(chapter);
@@ -63,22 +60,16 @@ public class ChapterController {
     @ApiOperation("修改-最终实现")
     @PostMapping("/update")
     public Result update(@RequestBody Chapter chapter){
-        boolean save = chapterService.updateById(chapter);
-        if (!save){
-            return Result.fail(save);
-        }
-        return Result.ok(save);
+        chapterService.updateById(chapter);
+        return Result.ok(null);
     }
 
     //5 删除章节
     @ApiOperation("删除章节")
     @PostMapping("/delete/{id}")
     public Result delete(@PathVariable Long id){
-        boolean save = chapterService.removeById(id);
-        if (!save){
-            return Result.fail(save);
-        }
-        return Result.ok(save);
+        chapterService.removeById(id);
+        return Result.ok(null);
     }
 }
 

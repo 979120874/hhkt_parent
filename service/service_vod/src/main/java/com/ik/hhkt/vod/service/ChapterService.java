@@ -17,5 +17,8 @@ import java.util.List;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    //大纲列表（章节和小节列表）
     List<ChapterVo> getNestedTreeList(Long courseId);
+    //根据课程id删除小节
+    void removeChapterByCourseId(Long id);
 }

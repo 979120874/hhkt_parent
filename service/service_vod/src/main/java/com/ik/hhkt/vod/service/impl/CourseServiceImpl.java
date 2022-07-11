@@ -8,20 +8,24 @@ import com.ik.hhkt.model.vod.CourseDescription;
 import com.ik.hhkt.model.vod.Subject;
 import com.ik.hhkt.model.vod.Teacher;
 import com.ik.hhkt.vo.vod.CourseFormVo;
+import com.ik.hhkt.vo.vod.CoursePublishVo;
 import com.ik.hhkt.vo.vod.CourseQueryVo;
 import com.ik.hhkt.vo.vod.CourseVo;
 import com.ik.hhkt.vod.mapper.CourseDescriptionMapper;
 import com.ik.hhkt.vod.mapper.CourseMapper;
 import com.ik.hhkt.vod.mapper.SubjectMapper;
 import com.ik.hhkt.vod.mapper.TeacherMapper;
-import com.ik.hhkt.vod.service.CourseService;
+import com.ik.hhkt.vod.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ik.hhkt.vod.service.TeacherService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +49,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private SubjectMapper subjectMapper;
     @Resource
     private CourseDescriptionMapper courseDescriptionMapper;
+    @Resource
+    private VideoService videoService;
+    @Resource
+    private ChapterService chapterService;
+    @Resource
+    private CourseDescriptionService courseDescriptionService;
 
     @Override
     public Map<String, Object> findPage(Long page, Long limit, CourseQueryVo courseQueryVo) {
@@ -126,6 +136,35 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             return -1L;
         }
         return course.getId();
+    }
+
+    //根据id获取课程发布信息
+    @Override
+    public CoursePublishVo getCoursePublishVo(Long id) {
+        CoursePublishVo coursePublishVo= courseMapper.getCoursePublishVo(id);
+        return coursePublishVo;
+    }
+
+    //根据id发布课程
+    @Override
+    public Boolean publishCourseById(Long id) {
+        Course course = new Course();
+        course.setId(id);
+        course.setStatus(1);
+        course.setPublishTime(Date.from(LocalDateTime.now().withNano(0).atZone(ZoneId.systemDefault()).toInstant()));
+        return this.updateById(course);
+    }
+
+    @Override
+    public void removeCourseById(Long id) {
+        //根据课程id删除小节
+        videoService.removeVideoByCourseId(id);
+        //根据课程id删除章节
+        chapterService.removeChapterByCourseId(id);
+        //根据课程id删除描述
+        courseDescriptionService.removeById(id);
+        //根据课程id删除课程
+        baseMapper.deleteById(id);
     }
 
     //获取讲师和分类名称

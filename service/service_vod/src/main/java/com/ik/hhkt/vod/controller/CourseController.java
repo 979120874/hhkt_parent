@@ -4,6 +4,7 @@ package com.ik.hhkt.vod.controller;
 import com.ik.hhkt.model.vod.Course;
 import com.ik.hhkt.result.Result;
 import com.ik.hhkt.vo.vod.CourseFormVo;
+import com.ik.hhkt.vo.vod.CoursePublishVo;
 import com.ik.hhkt.vo.vod.CourseQueryVo;
 import com.ik.hhkt.vo.vod.CourseVo;
 import com.ik.hhkt.vod.service.CourseService;
@@ -67,6 +68,26 @@ public class CourseController {
         if (i<=0){
             Result.fail();
         }
+        return Result.ok(courseInfo.getId());
+    }
+
+    //课程最终发布接口
+    @ApiOperation("根据id获取课程发布信息")
+    @GetMapping("getCoursePublishVo/{id}")
+    public Result getCoursePublishVo(@ApiParam(name = "id",value = "课程id",required = true) @PathVariable Long id){
+        CoursePublishVo coursePublishVo = courseService.getCoursePublishVo(id);
+        return Result.ok(coursePublishVo);
+    }
+    @ApiOperation("根据id发布课程,发布课程按钮")
+    @PutMapping("publishCourseById/{id}")
+    public Result publishCourseById(@ApiParam(name = "id",value = "课程id",required = true) @PathVariable Long id){
+        Boolean aBoolean = courseService.publishCourseById(id);
+        return Result.ok(aBoolean);
+    }
+    @ApiOperation(value = "删除课程")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        courseService.removeCourseById(id);
         return Result.ok();
     }
 }

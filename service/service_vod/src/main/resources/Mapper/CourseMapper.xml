@@ -6,4 +6,20 @@
         select c.id,c.teacher_id,c.subject_id,c.subject_parent_id,c.title,c.price,c.lesson_num,c.cover,cd.description
         from course c left join course_description cd on c.id = cd.course_id where c.id=#{id}
     </select>
+
+    <select id="getCoursePublishVo" resultType="com.ik.hhkt.vo.vod.CoursePublishVo">
+        select c.id,
+               c.title,
+               c.cover,
+               c.lesson_num,
+               s1.title subject_parent_title,
+               s2.title subject_title,
+               t.name teacher_name,
+               c.price
+        from course c
+                 join subject s1 on s1.id = c.subject_parent_id
+                 join subject s2 on s2.id = c.subject_id
+                 join teacher t on t.id = c.teacher_id
+        where c.id = #{id}
+    </select>
 </mapper>
