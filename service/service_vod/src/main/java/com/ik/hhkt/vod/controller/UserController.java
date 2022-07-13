@@ -16,7 +16,7 @@ import java.util.Hashtable;
  **/
 @RestController
 @RequestMapping("/admin/vod/user")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "用户登录管理接口")
 public class UserController {
 

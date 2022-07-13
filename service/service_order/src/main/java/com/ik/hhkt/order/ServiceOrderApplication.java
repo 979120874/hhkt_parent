@@ -1,22 +1,20 @@
-package com.ik.hhkt.vod;
+package com.ik.hhkt.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * TODO
  *
- * @className: ServiceVodApplication
+ * @className: ServiceOrderApplication
  * @author: weishihuan
- * @date: 2022-07-06 10:40
+ * @date: 2022-07-13 17:21
  **/
 @SpringBootApplication
-@ComponentScan(basePackages = "com.ik")
 @EnableDiscoveryClient
-public class ServiceVodApplication {
+public class ServiceOrderApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceVodApplication.class,args);
+        SpringApplication.run(ServiceOrderApplication.class, args);
     }
 }

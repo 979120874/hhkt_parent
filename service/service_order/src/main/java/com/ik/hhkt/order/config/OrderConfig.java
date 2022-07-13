@@ -1,26 +1,24 @@
-package com.ik.hhkt.config;
+package com.ik.hhkt.order.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * TODO
  *
- * @className: MybatisPlusInterceptor
+ * @className: OrderConfig
  * @author: weishihuan
- * @date: 2022-07-06 15:51
+ * @date: 2022-07-13 17:31
  **/
 @Configuration
-public class VodConfig {
+public class OrderConfig {
     /**
      * 分页插件
-     * @return
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        return paginationInterceptor;
+        return new PaginationInterceptor();
     }
 }

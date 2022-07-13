@@ -53,7 +53,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public Map<String, Object> findPage(Long page, Long limit, CourseQueryVo courseQueryVo) {
-        System.out.println("123456");
         //获取条件值
         String title = courseQueryVo.getTitle();//名称
         Long subjectId = courseQueryVo.getSubjectId();//二级分类

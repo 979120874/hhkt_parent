@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/vod/teacher")
 @Api(tags = "讲师管理接口")
-@CrossOrigin
+//@CrossOrigin
 public class TeacherController {
 
     @Resource

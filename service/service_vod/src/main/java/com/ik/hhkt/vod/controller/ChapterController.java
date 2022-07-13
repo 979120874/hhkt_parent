@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value="/admin/vod/chapter")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags="课程章节接口")
 public class ChapterController {
 
