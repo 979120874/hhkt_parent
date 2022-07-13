@@ -14,5 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VideoMapper extends BaseMapper<Video> {
-
+    int updateVideoSourceIdAndName(Long id);
 }

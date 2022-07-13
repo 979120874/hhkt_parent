@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ik.hhkt.vod.mapper.VideoVisitorMapper">
+
+    <select id="findCount" parameterType="java.util.List" resultType="com.ik.hhkt.vo.vod.VideoVisitorCountVo">
+        select date(join_time) joinTime,count(*) userCount
+        from video_visitor
+        where course_id=#{courseId}
+        and date(join_time) &gt; #{startDate}
+        and date(join_time) &lt; #{endDate}
+        group by date(join_time)
+    </select>
+</mapper>

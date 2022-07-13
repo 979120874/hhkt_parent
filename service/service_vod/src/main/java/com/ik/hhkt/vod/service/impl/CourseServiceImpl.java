@@ -1,16 +1,11 @@
 package com.ik.hhkt.vod.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ik.hhkt.model.vod.Course;
-import com.ik.hhkt.model.vod.CourseDescription;
-import com.ik.hhkt.model.vod.Subject;
-import com.ik.hhkt.model.vod.Teacher;
+import com.ik.hhkt.model.vod.*;
 import com.ik.hhkt.vo.vod.CourseFormVo;
 import com.ik.hhkt.vo.vod.CoursePublishVo;
 import com.ik.hhkt.vo.vod.CourseQueryVo;
-import com.ik.hhkt.vo.vod.CourseVo;
 import com.ik.hhkt.vod.mapper.CourseDescriptionMapper;
 import com.ik.hhkt.vod.mapper.CourseMapper;
 import com.ik.hhkt.vod.mapper.SubjectMapper;
@@ -20,11 +15,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +53,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public Map<String, Object> findPage(Long page, Long limit, CourseQueryVo courseQueryVo) {
+        System.out.println("123456");
         //获取条件值
         String title = courseQueryVo.getTitle();//名称
         Long subjectId = courseQueryVo.getSubjectId();//二级分类
@@ -65,16 +61,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         Long teacherId = courseQueryVo.getTeacherId();//讲师
         Page<Course> coursePage = new Page<>(page,limit);
         QueryWrapper queryWrapper = new QueryWrapper<>();
-        if (StringUtils.checkValNotNull(title)){
+        if (!StringUtils.isEmpty(title)){
             queryWrapper.like("title",title);
         }
-        if (StringUtils.checkValNotNull(subjectId)){
+        if (!StringUtils.isEmpty(subjectId)){
             queryWrapper.eq("subject_id",subjectId);
         }
-        if (StringUtils.checkValNotNull(subjectParentId)){
+        if (!StringUtils.isEmpty(subjectParentId)){
             queryWrapper.eq("subject_parent_id",subjectParentId);
         }
-        if (StringUtils.checkValNotNull(teacherId)){
+        if (!StringUtils.isEmpty(teacherId)){
             queryWrapper.eq("teacher_id",teacherId);
         }
         Page selectPage = courseMapper.selectPage(coursePage, queryWrapper);

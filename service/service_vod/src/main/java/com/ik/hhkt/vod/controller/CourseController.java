@@ -36,9 +36,9 @@ public class CourseController {
 
     @ApiOperation("点播课程列表")
     @PostMapping("{page}/{limit}")
-    public Result courseList(@ApiParam(name = "page", value = "页码", defaultValue = "0", required = true) @PathVariable("page") Long page,
+    public Result courseList(@ApiParam(name = "page", value = "页码", defaultValue = "1", required = true) @PathVariable("page") Long page,
                              @ApiParam(name = "limit", value = "每页数据", required = true) @PathVariable("limit") Long limit,
-                             @ApiParam(name = "courseQueryVo", value = "查询条件", required = true) @RequestBody CourseQueryVo courseQueryVo) {
+                             @ApiParam(name = "courseQueryVo", value = "查询条件") @RequestBody CourseQueryVo courseQueryVo) {
         Map<String, Object> map = courseService.findPage(page, limit, courseQueryVo);
         return Result.ok(map);
     }

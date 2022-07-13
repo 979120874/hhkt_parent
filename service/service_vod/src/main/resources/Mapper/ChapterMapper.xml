@@ -17,6 +17,6 @@
     <select id="getNestedTreeList" parameterType="long" resultMap="ChapterVoMap">
         select c.id cid, c.title ctitle, c.sort csort,v.id vid,v.title vtitle,v.is_free,v.sort vsort,v.video_source_id
         from chapter c left join video v on c.course_id=v.course_id and c.id=v.chapter_id
-        where c.course_id = #{courseId} order by c.sort;
+        where c.course_id = #{courseId} and c.is_deleted=0 and v.is_deleted=0  order by c.sort;
     </select>
 </mapper>

@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ik.hhkt.vod.mapper.VideoMapper">
 
+    <update id="updateVideoSourceIdAndName">
+        update video set video_source_id=null,video_original_name=null where id=#{id}
+    </update>
 </mapper>

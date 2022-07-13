@@ -3,7 +3,7 @@ package com.ik.hhkt.vod.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import org.springframework.util.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ik.hhkt.model.vod.Teacher;
 import com.ik.hhkt.result.Result;
@@ -73,16 +73,16 @@ public class TeacherController {
         String joinDateBegin = teacherQueryVo.getJoinDateBegin();
         String joinDateEnd = teacherQueryVo.getJoinDateEnd();
         QueryWrapper queryWrapper = new QueryWrapper();
-        if (StringUtils.checkValNotNull(name)) {
+        if (!StringUtils.isEmpty(name)) {
             queryWrapper.like("name", name);
         }
-        if (StringUtils.checkValNotNull(level)) {
+        if (!StringUtils.isEmpty(level)) {
             queryWrapper.eq("level", level);
         }
-        if (StringUtils.checkValNotNull(joinDateBegin)) {
+        if (!StringUtils.isEmpty(joinDateBegin)) {
             queryWrapper.ge("join_date", joinDateBegin);
         }
-        if (StringUtils.checkValNotNull(joinDateEnd)) {
+        if (!StringUtils.isEmpty(joinDateEnd)) {
             queryWrapper.le("join_date", joinDateEnd);
         }
         IPage<Teacher> pageModel = teacherService.page(teacherPage, queryWrapper);
