@@ -1,6 +1,5 @@
 package com.ik;
 
-
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -9,8 +8,14 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
+/**
+ * TODO
+ *
+ * @className: CodeGet
+ * @author: weishihuan
+ * @date: 2022-07-13 17:18
+ **/
 public class CodeGet {
-
     public static void main(String[] args) {
 
         // 1、创建代码生成器
@@ -21,7 +26,7 @@ public class CodeGet {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         //gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setOutputDir("D:\\JAVAstudent\\ggkt\\hhkt_parent\\service\\service_vod"+"/src/main/java");
+        gc.setOutputDir("D:\\JAVAstudent\\ggkt\\hhkt_parent\\service\\service_order"+"/src/main/java");
 
         gc.setServiceName("%sService");	//去掉Service接口的首字母I
         gc.setAuthor("wsh");
@@ -30,7 +35,7 @@ public class CodeGet {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/glkt_vod?serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://localhost:3306/glkt_order?serverTimezone=UTC");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
@@ -39,11 +44,11 @@ public class CodeGet {
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("vod"); //模块名
+        pc.setModuleName("order"); //模块名
         pc.setParent("com.ik.hhkt");
 
         pc.setController("controller");
-        pc.setEntity("entity");
+        //pc.setEntity("entity");
         pc.setService("service");
         pc.setMapper("mapper");
         mpg.setPackageInfo(pc);
@@ -51,7 +56,7 @@ public class CodeGet {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
 
-        strategy.setInclude("video_visitor");
+        strategy.setInclude("order_detail");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
 

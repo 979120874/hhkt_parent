@@ -21,7 +21,7 @@ public class CodeGet {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         //gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setOutputDir("D:\\JAVAstudent\\ggkt\\hhkt_parent\\service\\service_vod"+"/src/main/java");
+        gc.setOutputDir("D:\\JAVAstudent\\ggkt\\hhkt_parent\\service\\service_user"+"/src/main/java");
 
         gc.setServiceName("%sService");	//去掉Service接口的首字母I
         gc.setAuthor("wsh");
@@ -30,7 +30,7 @@ public class CodeGet {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/glkt_vod?serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://localhost:3306/glkt_user?serverTimezone=UTC");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
@@ -39,7 +39,7 @@ public class CodeGet {
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("vod"); //模块名
+        pc.setModuleName("user"); //模块名
         pc.setParent("com.ik.hhkt");
 
         pc.setController("controller");
@@ -51,7 +51,7 @@ public class CodeGet {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
 
-        strategy.setInclude("video_visitor");
+        strategy.setInclude("user_info","user_login_log");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
 

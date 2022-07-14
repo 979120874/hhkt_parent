@@ -2,7 +2,7 @@ package com.ik.hhkt.order.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ik.hhkt.order.entity.OrderInfo;
+import com.ik.hhkt.model.order.OrderInfo;
 import com.ik.hhkt.order.service.OrderInfoService;
 import com.ik.hhkt.result.Result;
 import com.ik.hhkt.vo.order.OrderInfoQueryVo;
@@ -31,10 +31,10 @@ public class OrderInfoController {
     private OrderInfoService orderInfoService;
 
     @ApiOperation(value = "获取分页列表")
-    @PostMapping("{page}/{limit}")
+    @GetMapping("{page}/{limit}")
     public Result index(@ApiParam(name = "page", value = "页码", defaultValue = "1", required = true) @PathVariable("page") Long page,
                         @ApiParam(name = "limit", value = "每页数据", required = true) @PathVariable("limit") Long limit,
-                        @ApiParam(name = "orderInfoVo", value = "查询条件") @RequestBody OrderInfoQueryVo orderInfoQueryVo){
+                        OrderInfoQueryVo orderInfoQueryVo){
         Page<OrderInfo> orderInfoPage = new Page<>(page,limit);
         Map map = orderInfoService.findPage(orderInfoPage, orderInfoQueryVo);
         return Result.ok(map);
