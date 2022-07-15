@@ -1,12 +1,18 @@
 package com.ik.hhkt.wechat.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ik.hhkt.model.wechat.Menu;
 import com.ik.hhkt.vo.wechat.MenuVo;
 import com.ik.hhkt.wechat.mapper.MenuMapper;
 import com.ik.hhkt.wechat.service.MenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +33,8 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Resource
     MenuMapper menuMapper;
+    @Autowired
+    private WxMpService wxMpService;
 
     @Override
     public List<MenuVo> findMenuInfo() {
@@ -53,5 +61,50 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             list.add(oneMenuVo);
         }
         return list;
+    }
+
+    @Override
+    public void syncMenu() {
+        List<MenuVo> menuInfo = this.findMenuInfo();
+        //菜单
+        JSONArray buttonList = new JSONArray();
+        for (MenuVo oneMenuVo : menuInfo) {
+            JSONObject oneMenuVoJson = new JSONObject();
+            oneMenuVoJson.put("name",oneMenuVo.getName());
+            JSONArray twoMenuVoJsonList = new JSONArray();
+            for (MenuVo twoMenuVo : oneMenuVo.getChildren()) {
+                JSONObject twoMenuVoJson = new JSONObject();
+                twoMenuVoJson.put("type",twoMenuVo.getType());
+                if ("view".equals(twoMenuVo.getType())){
+                    twoMenuVoJson.put("name",twoMenuVo.getName());
+                    twoMenuVoJson.put("url", "https://39au046856.zicp.fun"
+                            +twoMenuVo.getUrl());
+                }else {
+                    twoMenuVoJson.put("name",twoMenuVo.getName());
+                    twoMenuVoJson.put("key",twoMenuVo.getMeunKey());
+                }
+                twoMenuVoJsonList.add(twoMenuVoJson);
+            }
+            oneMenuVoJson.put("sub_button",twoMenuVoJsonList);
+            buttonList.add(oneMenuVoJson);
+        }
+        //菜单
+        JSONObject button = new JSONObject();
+        button.put("button", buttonList);
+        try {
+            String menuId = this.wxMpService.getMenuService().menuCreate(button.toJSONString());
+            System.out.println("menuId="+menuId);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeMenu() {
+        try {
+            wxMpService.getMenuService().menuDelete();
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
     }
 }
